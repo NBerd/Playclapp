@@ -1,43 +1,49 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Cube _cubePrefab;
-
-    [SerializeField] private TextField _distanceField;
-    [SerializeField] private TextField _spawnDelayField;
-    [SerializeField] private TextField _cubeSpeedField;
-
-    private float _distance;
-    private float _spawnDelay;
-    private float _cubeSpeed;
+    [SerializeField] private int _poolDefaultCapacity;
+    [SerializeField] private int _poolMaxSize;
 
     private float _lastSpawnTime;
+    private Vector3 _spawnPosition;
+
+    private ObjectPool<Cube> _pool;
 
     private void Start()
     {
-        _distanceField.OnValueChange += (float x) => _distance = x;
-        _spawnDelayField.OnValueChange += (float x) => _spawnDelay = x;
-        _cubeSpeedField.OnValueChange += (float x) => _cubeSpeed = x;
+        CreatePool();
+    }
 
-        _distanceField.ValueChange();
-        _spawnDelayField.ValueChange();
-        _cubeSpeedField.ValueChange();
+    private void CreatePool() 
+    {
+        _spawnPosition = transform.position;
+
+        _pool = new ObjectPool<Cube>(() =>
+        {
+            return Instantiate(_cubePrefab);
+        }, cube =>
+        {
+            cube.gameObject.SetActive(true);
+            cube.Init(cube => _pool.Release(cube), _spawnPosition);
+        }, cube => {
+            cube.gameObject.SetActive(false);
+        }, cube => {
+            Destroy(cube.gameObject);
+        }, true, _poolDefaultCapacity, _poolMaxSize);
     }
 
     private void Update()
     {
-        if (Time.time > _lastSpawnTime + _spawnDelay) 
-            InstantiateCube();
+        if (Time.time > _lastSpawnTime + GlobalSettings.SpawnDelay) SpawnCube();
     }
 
-    private void InstantiateCube() 
+    private void SpawnCube() 
     {
         _lastSpawnTime = Time.time;
 
-        Cube cube = Instantiate(_cubePrefab, transform);
-        cube.Speed = _cubeSpeed;
-        cube.SetTargetPosition(_distance);
-        cube.StartMove();
+        _pool.Get();
     }
 }

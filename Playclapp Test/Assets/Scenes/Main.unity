@@ -406,7 +406,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 1
+  m_Text: 2
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -1004,7 +1004,6 @@ GameObject:
   - component: {fileID: 641898872}
   - component: {fileID: 641898871}
   - component: {fileID: 641898874}
-  - component: {fileID: 641898875}
   m_Layer: 5
   m_Name: Input Field
   m_TagString: Untagged
@@ -1130,7 +1129,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 100
+  m_Text: 5
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -1193,21 +1192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minValue: 0
-  _maxValue: Infinity
---- !u!114 &641898875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641898869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07e4c7e30a1254f4b846fc187440d20c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _minValue: 0
-  _maxValue: 0
+  _maxValue: 100
 --- !u!1 &675209352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,6 +1611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1021160741}
   - component: {fileID: 1021160740}
+  - component: {fileID: 1021160742}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -1646,9 +1632,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cubePrefab: {fileID: 5054469339386422606, guid: d1f70584517bc5a4b8ec4df3505253d6, type: 3}
-  _distanceField: {fileID: 641898874}
-  _spawnDelayField: {fileID: 320138891}
-  _cubeSpeedField: {fileID: 2116128151}
+  _poolDefaultCapacity: 20
+  _poolMaxSize: 100
 --- !u!4 &1021160741
 Transform:
   m_ObjectHideFlags: 0
@@ -1663,6 +1648,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1021160742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021160739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e26dfb04ab237545a22a7ca6708d34b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _distanceField: {fileID: 641898874}
+  _spawnDelayField: {fileID: 320138891}
+  _cubeSpeedField: {fileID: 2116128151}
 --- !u!1 &1062683309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1954,7 +1954,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "1\u200B"
+  m_text: "2\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2088,7 +2088,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "100\u200B"
+  m_text: "5\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

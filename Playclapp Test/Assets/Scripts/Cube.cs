@@ -1,38 +1,28 @@
-using System;
-using System.Collections;
 using UnityEngine;
+using System;
 
 public class Cube : MonoBehaviour
 {
-    private Vector3 _targetPosition;
+    private Vector3 _diraction = Vector3.forward;
 
-    public float Speed { private get; set; }
+    private Action<Cube> OnDistanceComplite;
 
-    public void SetTargetPosition(float distance) 
+    public void Init(Action<Cube> OnComplite, Vector3 startPosition)
     {
-        Vector3 _currentPositon = transform.position;
-
-        if (_currentPositon.z >= distance) 
-            return;
-
-        _targetPosition = _currentPositon; 
-        _targetPosition.z = distance;
+        OnDistanceComplite = OnComplite;
+        transform.position = startPosition;
     }
 
-    public void StartMove() 
+    private void Update()
     {
-        StartCoroutine(MoveCoroutine(() => Destroy(gameObject)));
+        if (transform.position.z < GlobalSettings.Distance)
+            Move();
+        else
+            OnDistanceComplite?.Invoke(this);
     }
 
-    IEnumerator MoveCoroutine(Action OnComplite = null) 
+    private void Move()
     {
-        while (transform.position != _targetPosition) 
-        {
-            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, Speed * Time.deltaTime);
-
-            yield return null;
-        }
-
-        OnComplite?.Invoke();
+        transform.Translate(GlobalSettings.CubeSpeed * Time.deltaTime * _diraction);
     }
 }
